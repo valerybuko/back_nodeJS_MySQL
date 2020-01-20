@@ -36,7 +36,7 @@ const Users = sequelize.define('users', {
 
 sequelize.sync({ force: true })
   .then(res => console.log('Connection to the database has been successful'))
-  .catch(err => console.log);
+  .catch(err => console.log(err));
 
 app.use(boom());
 app.use(bodyParser.urlencoded({ extended: true }));
