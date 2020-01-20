@@ -54,29 +54,27 @@ app.listen(PORT, async(req, res) => {
 });
 
 app.post('/create-user', async (req, res) => {
-  const newUser = await addNewUser(req.body).catch(err => console.log);
+  const newUser = await addNewUser(req.body).catch(err => console.log(err));
   return res.send(newUser);
 });
 
 app.get('/users', async (req, res) => {
-  const allUsers = await getAllUsers().catch(err => console.log);
+  const allUsers = await getAllUsers().catch(err => console.log(err));
   return res.send(allUsers);
 });
 
 app.get('/user', async (req, res) => {
-  const user = await getUserWithID(req.query.id).catch(err => console.log);
+  const user = await getUserWithID(req.query.id).catch(err => console.log(err));
   return res.send(user);
 });
 
-router.put('/user', async (req, res) => {
-  console.log(req.body);
-  const result = await updateUser(req.body).catch(err => console.log);
+app.put('/user', async (req, res) => {
+  const result = await updateUser(req.body).catch(err => console.log(err));
   return res.send(result);
 });
 
 app.delete('/user', async (req, res) => {
-  console.log(req.query.id);
-  await deleteUser(req.query.id).catch(err => console.log);
+  await deleteUser(req.query.id).catch(err => console.log(err));
   return res.send();
 });
 
@@ -98,8 +96,8 @@ const getUserWithID = (id) => {
 }
 
 const updateUser = (user) => {
-  const {id, username} = user;
-  return Users.update({ username }, {
+  const {id, username, email, password, isConfirm} = user;
+  return Users.update({ username, email, password, isConfirm }, {
       where: {
         id
       }
